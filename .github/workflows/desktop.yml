@@ -1,0 +1,22 @@
+name: Escritorio
+
+# Pruebas del dominio y la infraestructura de la app de escritorio (Godot + C#).
+# El instalador NO se arma aquí: exportar con Godot exige plantillas de más de 1 GB;
+# se publica a mano con desktop/scripts/build-release.ps1 -Publish (ver ADR-023).
+on:
+  push:
+    branches: [main]
+    paths: ['desktop/**', 'src/features/viewer3d/export/blender/**', '.github/workflows/desktop.yml']
+  pull_request:
+    paths: ['desktop/**', 'src/features/viewer3d/export/blender/**', '.github/workflows/desktop.yml']
+  workflow_dispatch:
+
+jobs:
+  test:
+    # windows: la sesión del escritorio se cifra con DPAPI y su prueba solo corre ahí
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with: { dotnet-version: 8.0.x }
+      - run: dotnet test desktop/Plano3D.sln --nologo -v q
