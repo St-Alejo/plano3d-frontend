@@ -19,7 +19,7 @@ jobs:
       - run: npm run test:coverage
 
   # publica en Azure Static Web Apps (plan Free). La URL de la API sale de la variable
-  # del repositorio VITE_API_URL; el token de despliegue, del secreto AZURE_STATIC_WEB_APPS_API_TOKEN.
+  # del repositorio VITE_API_URL (y la de Interiores 3D, de VITE_INTERIORES_URL); el token de despliegue, del secreto AZURE_STATIC_WEB_APPS_API_TOKEN.
   deploy:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
@@ -31,6 +31,7 @@ jobs:
       - run: npm run build
         env:
           VITE_API_URL: ${{ vars.VITE_API_URL }}
+          VITE_INTERIORES_URL: ${{ vars.VITE_INTERIORES_URL }}
       - uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
