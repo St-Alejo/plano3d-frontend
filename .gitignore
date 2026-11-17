@@ -7,3 +7,7 @@ coverage/
 playwright-report/
 test-results/
 node_modules/.tmp/
+
+# trabajo local de la skill de diseño
+.taste-skill/
+.lighthouseci/
